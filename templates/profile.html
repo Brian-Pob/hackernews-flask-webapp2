@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="{{url_for('static', filename='profile.css')}}">
+
+<body>
+{% extends "base.html" %} {% block title %}Python-Project - Your Profile{% endblock %}
+{% block content %}
+	{% if session %}
+	<div class="card border-dark mb-3">
+		<div class="card-header">Profile</div>
+		<div class="card-body">
+			<h6 class="card-subtitle mb-2 text-muted">name : {{session.userinfo.name}}</h6>
+			<h6 class="card-subtitle mb-2 text-muted">email : {{session.userinfo.email}}</h6>
+			<h6 class="card-subtitle mb-2 text-muted">uuid : {{session.userinfo.sub}}</h6>
+			<h6 class="card-subtitle mb-2 text-muted">role : user</h6>
+		</div>
+	</div>
+	<div class="card border-primary mb-3">
+		<table class="table table-striped">
+			<thead class="text-center">
+				<tr class="bg-primary text-white">
+					<th scope="col" class="text-left">Liked Articles</th>
+					<th scope="col">Author</th> 
+					<th scope="col"></th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for node in likedtable %}
+				<tr class="text-center">
+					<td class="text-left"><a href={{node['url']}}>{{node['title']}}</a></td>
+					<td class=>{{node['author']}}</td>
+				
+					{% if node['id'] in likedflag %}
+					<td><a class="btn btn-primary" href="/like-article/{{node['id']}}" role="button">Liked!</a></td>
+					{% else %}
+					<td><a class="btn btn-outline-primary" href="/like-article/{{node['id']}}" role="button">Like?</a></td>
+					{% endif %}
+					<td><a class="btn btn-danger" href="/dislike-article/{{node['id']}}" role="button">Disliked?</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="card border-danger mb-3">
+		<table class="table table-striped">
+			<thead class="text-center">
+				<tr class="bg-danger text-white">
+					<th scope="col" class="text-left">Disliked Articles</th>
+					<th scope="col">Author</th> 
+					<th scope="col"></th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for node in dislikedtable %}
+				<tr class="text-center">
+					<td class="text-left"><a href={{node['url']}}>{{node['title']}}</a></td>
+					<td class=>{{node['author']}}</td>
+					<td><a class="btn btn-primary" href="/like-article/{{node['id']}}" role="button">Liked?</a></td>
+					{% if node['id'] in dislikedflag %}
+					<td><a class="btn btn-danger" href="/dislike-article/{{node['id']}}" role="button">Disliked!</a></td>
+					{% else %}
+					<td><a class="btn btn-outline-danger" href="/dislike-article/{{node['id']}}" role="button">Dislike?</a></td>
+					{% endif %}
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{% else %}
+	<div class="alert alert-danger" role="alert">You do not have sufficient permissions to view this page.</div>
+	{% endif %}
+{% endblock %}
+</body>

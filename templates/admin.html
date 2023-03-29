@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="{{url_for('static', filename='news.css')}}">
+
+{% extends "base.html" %} {% block title %}Python-Project - Admin Page{% endblock %}
+{% block content %}
+<div class="card border-dark mb-3">
+	<div class="card-header">Profile</div>
+	<div class="card-body">
+		<h6 class="card-subtitle mb-2 text-muted">name : {{session.userinfo.name}}</h6>
+		<h6 class="card-subtitle mb-2 text-muted">email : {{session.userinfo.email}}</h6>
+		<h6 class="card-subtitle mb-2 text-muted">uuid : {{session.userinfo.sub}}</h6>
+		<h6 class="card-subtitle mb-2 text-muted">role : admin</h6>
+	</div>
+</div>
+<div class="card border-primary mb-3">
+	<table class="table table-striped">
+		<thead class="text-center">
+			<tr class="bg-primary text-white">
+				<th scope="col" class="text-left">Articles</th>
+				<th scope="col">Author</th> 
+				<th scope="col">Liked By</th>
+				<th scope="col">Disliked By</th> 
+				<th scope="col"></th> 
+			</tr>
+		</thead>
+		<tbody>
+			{% for post_id in post_feedback %}
+			<tr class="text-center">
+				<td class="text-left"><a href={{post_feedback[post_id][0]['url']}}>{{post_feedback[post_id][0]['title']}}</a></td>
+				<td class=>{{post_feedback[post_id][0]['author']}}</td>		
+				<td>{{post_feedback[post_id][1]}}</td>
+				<td>{{post_feedback[post_id][2]}}</td>
+				<form action="{{url_for('deletepost')}}" method = "post">
+					<td><button class="btn btn-primary btn-md btn-block" type="submit" name="deletepost" value="{{post_id}}">Delete Post</button></td>
+				</form>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

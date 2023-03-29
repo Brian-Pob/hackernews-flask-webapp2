@@ -1,0 +1,55 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+
+body{
+    background: radial-gradient(circle, rgb(3, 14, 114) 0%, rgb(218, 64, 64) 40%, rgb(94, 191, 255) 100%);
+    background-size: 110%;
+    background-attachment: fixed;
+}
+
+.container {	
+    height: 100vh;
+    width: 220vh;
+}
+
+a:hover:not(.active) {
+    color: #000000;
+}
+
+.active {
+    color: #FE9681;
+}
+
+
+.content h2{
+    font-size: 25px;
+    font-weight: 100;
+    margin-top: 24px;
+    margin-bottom: 15px;
+    color:rgb(255, 255, 255);
+    padding-left: 150px;
+}
+
+.content p1{
+    font-size: 20px;
+    color:rgb(255, 255, 255);
+    padding-left: 150px;
+}
+
+.content1 h3{
+    font-size: 40px;
+    font-weight: 100;
+    margin-top: 24px;
+    margin-bottom: 15px;
+    color:rgb(255, 255, 255);
+    padding-left: 150px;
+}
+
+.content1 p2{
+    font-size: 20px;
+    color:rgb(255, 255, 255);
+    padding-left: 150px;
+}

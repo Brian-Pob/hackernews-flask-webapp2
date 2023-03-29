@@ -1,0 +1,81 @@
+{% extends "base.html" %} {% block title %}HackerNews++ - News{% endblock %}
+    {% block content %}
+    {% if session %}
+    <link rel="stylesheet" href="{{url_for('static', filename='news.css')}}">
+
+    <script src="https://kit.fontawesome.com/c92fee418d.js" crossorigin="anonymous"></script>
+
+    <div class="container">
+    
+            <div class ="content">
+                <h2> Hey there! Thanks for the authentication!</h2>
+                <p1>You can browse featured articles now!</p1>
+            </div>
+            <div class ="content">
+                <nav aria-label="Pagination">
+                    <ul class="pagination justify-content-end">
+                        {% set prev_Page = currentPageNumber - 1 %}
+                        {% if currentPageNumber > 1 %}
+                            <li class="page-item"><a class="page-link" href="news?page={{prev_Page}}">Previous</a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a class="page-link" href="news?page={{prev_Page}}">Previous</a></li>
+                        {% endif %}
+                        <li class="page-item disabled"><a class="page-link" href="news?page={{currentPageNumber}}">{{currentPageNumber}}</a></li>
+                        {% set next_Page = currentPageNumber + 1 %}
+                        {% if currentPageNumber < maxPage %}
+                            <li class="page-item"><a class="page-link" href="news?page={{next_Page}}">Next</a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a class="page-link" href="news?page={{next_Page}}">Next</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="news-container">
+                {% for post in articlestable %}
+                <div class="news-post-default" data-url="{{ post.url }}">
+                    <a class="post-title title-default" href="{{ post.url }}">
+                        <div class="title-str">{{ post.title }}</div>
+                    </a>
+                    <div>{{ post.by }}</div>
+                    <div class="web-preview web-preview-hidden"></div>
+                    <div class="news-footer">
+                        <div class="like-section">
+                            {% if post['id'] in likedflag %}
+                            <a href="/like-article/{{post['id']}}">
+                                <i class="like-dislike-button fa-solid fa-thumbs-up fa-3x"></i>
+                            </a>
+                            {% else %}
+                            <a href="/like-article/{{post['id']}}">
+                                <i class="like-dislike-button fa-regular fa-thumbs-up fa-3x"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="dislike-section">
+                            {% if post['id'] in dislikedflag %}
+                            <a href="/dislike-article/{{post['id']}}">
+                                <i class="like-dislike-button fa-solid fa-thumbs-down fa-3x"></i>
+                            </a>
+                            {% else %}
+                            <a href="/dislike-article/{{post['id']}}">
+                                <i class="like-dislike-button fa-regular fa-thumbs-down fa-3x"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+            <div class = "content1">
+                <h3>Please authenticate yourself!</h3><br>
+                <p2>You must be signed in to utilize this web-application</p2>
+            </div>
+    </div>
+
+{% endif %}
+
+<script src="{{url_for('static', filename='news.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="{{url_for('static', filename='home.css')}}">
+
+<body>
+
+    <div class="container">	
+			<div class ="content">
+				{% extends "base.html" %} {% block title %}HackerNews++ - Home{% endblock %}
+				{% block content %}
+					<br>
+					<h2>HackerNews++</h2>
+					<hr>
+					<p>This web application is affiliated with Florida State University for course CEN4090L.</p>
+					<h3>Authors</h3>
+					<hr>
+					<p>This web application has been constructed and is managed by :</p>
+				<ul>
+					<li>Carlos Pantoja-Malaga</li>
+					<li>Brian Poblete</li>
+					<li>Raviverma Chamarti</li>
+					<li>Quan Pham</li>
+					<li>Ralitsa Donova</li>
+				</ul>
+					<h3>Description</h3>
+					<hr>
+					<p>The semester project for CEN4090L (Software Engineering Capstone).</p>
+					<ul>
+						<li>Full-stack python web application built on Gunicorn Flask.</li>
+						<li>Hosted by an NGINX web server served on an Ubuntu 20.04 instance.</li>
+						<li>News tab is populated through interacting with HackerNewsAPI.</li>
+						<li>User management and authorization is handled through Auth0.</li>
+					</ul>
+				{% endblock %}
+			</div>
+	</div>
+</body>
+

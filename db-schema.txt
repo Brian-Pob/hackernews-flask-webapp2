@@ -1,0 +1,63 @@
+#
+# DB Schema & Related Info
+#
+# Written by: carlos pantoja-malaga
+# 
+#
+
+# Database
+
+SQLite3
+---
+This web application will be using SQLite3 to store and query collected and sourced data. This may be data collected from users who login through Auth0 or sourced JSON data from HackerNewsAPI.
+
+# Tables
+
+articles
+---
+Entries in this table make up the news articles which will be displayed in the web application. The unique identifier of this table would be the id attribute, as each article has a unique id associated to it.
+
+attributes:
+title - TEXT attribute, the title of the article
+author - TEXT attribute, the author of the article
+url - TEXT attribute, the link to the article
+date - TIMESTAMP attribute, the timestamp as to when the article was saved in the database, format: ("YYYY-MM-DD HH:MM:SS. SSS")
+
+users
+---
+Entries in this table make up user data. We are concerned with storing the 'sub' key from the userinfo key provided by Auth0 authenticated sessions as the unique id for storing users. All other relevant information will be used to construct profile pages.
+
+attributes:
+id - TEXT attribute, the 'sub' key extracted from the userinfo json from an Auth0 authenticated session token
+email - TEXT attribute, the email the user utilized to login
+name - TEXT attribute, the user's associated name
+admin - INTEGER attribute, a boolean value that associates whether a user is an administrator or not, may not be utilized depending on how administrators want to be handled
+
+likes
+---
+Entries in this table make up liked article data. If a user likes an article, an entry should be created with the article id and user id as relavent entry information.
+
+attributes:
+user_id - TEXT attribute, the user's unique id
+article_id - TEXT attribute,  the article id which has been liked
+
+dislikes
+---
+Entries in this table make up disliked article data. If a user dislikes an article, an entry should be created with the article id and user id as relevant entry information.
+
+attributes:
+user_id - TEXT attribute, the user's unique id
+article_id - TEXT attribute, the article id which has been disliked
+
+# init-db.py
+
+Execution
+---
+On execution the init-db.py file will attempt to create all the above SQLite tables if they do not exist within the database. If the articles table is being created, after creation, the file will populate the table with 15 entries sourced from the top stories of the HackerNews API. This file should always be run on startup of the web application, to ensure that the necessiated tables within the database are present.
+
+# update-db.py
+
+Execution
+---
+On execution the update-db.py file will attempt to add new articles to the articles table from the top stories of the HackerNewsAPI. This sources up to 10 articles, which must be validated before being inserted into the database. The database will attempt storage management on itself by truncating an equal amount of older articles which do not have likes. In order for articles to be expulsed from the database, they must be the oldest articles with 0 likes present in the likes table. 
+
